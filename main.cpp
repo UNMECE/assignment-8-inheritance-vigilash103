@@ -42,6 +42,26 @@ class ElectricField : public Field
         {
             return *E;
         }
+
+        // Define the operator +
+        ElectricField operator+(const ElectricField& other)
+        {
+            return ElectricField(
+                this->value[0] + other.value[0],
+                this->value[1] + other.value[1],
+                this->value[2] + other.value[2]
+            );
+        }
+
+        // Define the operator << for ElectricField
+        friend std::ostream& operator<<(std::ostream& os, const ElectricField& field)
+        {
+            os << "ElectricField(" 
+               << field.value[0] << ", " 
+               << field.value[1] << ", " 
+               << field.value[2] << ")";
+            return os;
+        }
 };
 
 class MagneticField : public Field
@@ -50,7 +70,7 @@ class MagneticField : public Field
         std::unique_ptr<double> M;
     public:
         MagneticField(): Field(){}
-        MagneticField(double x, double y, double z) : Field(mx, my, mz) {}
+        MagneticField(double x, double y, double z) : Field(x, y, z) {}
         ~MagneticField(){}
 
         double getMF()
